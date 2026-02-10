@@ -192,7 +192,7 @@ class Database extends Config
     $this->default['username'] = getenv('MYSQLUSER');
     $this->default['password'] = getenv('MYSQLPASSWORD');
     $this->default['database'] = getenv('MYSQLDATABASE');
-    $this->default['port']     = getenv('MYSQLPORT');
+    $this->default['port'] = (int) getenv('MYSQLPORT');
 
     if (ENVIRONMENT === 'testing') {
         $this->defaultGroup = 'tests';
