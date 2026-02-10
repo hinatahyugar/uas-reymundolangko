@@ -184,19 +184,6 @@ class Database extends Config
         ],
     ];
 
-    public function __construct()
-{
-    parent::__construct();
 
-    $this->default['hostname'] = getenv('MYSQLHOST');
-    $this->default['username'] = getenv('MYSQLUSER');
-    $this->default['password'] = getenv('MYSQLPASSWORD');
-    $this->default['database'] = getenv('MYSQLDATABASE');
-    $this->default['port'] = (int) getenv('MYSQLPORT');
-
-    if (ENVIRONMENT === 'testing') {
-        $this->defaultGroup = 'tests';
-    }
-}
 
 }
