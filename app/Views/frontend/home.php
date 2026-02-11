@@ -6,6 +6,176 @@ Home - Rey Beauty Fashion
 
 <?= $this->section('styles') ?>
 <style> 
+/* ===== 3 GAMBAR BANNER - FULL LAYAR KIRI KANAN, RATA TENGAH ===== */
+/* Desktop: normal grid 3 kolom */
+.product-horizontal-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
+
+/* Mobile: FULL LAYAR TANPA PADDING KIRI KANAN */
+@media (max-width: 768px) {
+    .banner-modern .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .product-horizontal-row {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2px; /* GAP SANGAT KECIL */
+        justify-content: center;
+        align-items: center;
+        width: 100vw; /* FULL VIEWPORT WIDTH */
+        max-width: 100vw;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    
+    .product-horizontal-item {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .product-horizontal-item .featured-product-card {
+        height: 130px;
+        width: 100%;
+        border-radius: 0; /* KOTAK FULL, TANPA ROUNDED */
+        margin: 0;
+        border: none;
+    }
+    
+    .product-horizontal-item .product-thumb {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0;
+    }
+    
+    .product-horizontal-item .product-overlay {
+        padding: 8px 10px;
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.2));
+        text-align: left;
+        border-radius: 0;
+    }
+    
+    .product-horizontal-item h6 {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+        font-weight: 600;
+    }
+    
+    .product-horizontal-item .price {
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+    
+    .product-horizontal-item .old-price {
+        font-size: 0.6rem;
+        margin-left: 2px;
+    }
+    
+    .product-horizontal-item .product-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        top: 8px;
+        right: 8px;
+        border-radius: 4px; /* KOTAK SLIGHT ROUNDED */
+    }
+}
+
+/* Small mobile */
+@media (max-width: 576px) {
+    .product-horizontal-item .featured-product-card {
+        height: 110px;
+    }
+    
+    .product-horizontal-item h6 {
+        font-size: 0.7rem;
+    }
+    
+    .product-horizontal-item .price {
+        font-size: 0.7rem;
+    }
+    
+    .product-horizontal-item .old-price {
+        font-size: 0.55rem;
+    }
+    
+    .product-horizontal-item .product-badge {
+        font-size: 0.6rem;
+        padding: 1px 5px;
+        top: 6px;
+        right: 6px;
+    }
+}
+
+/* Extra small - HP sangat kecil */
+@media (max-width: 375px) {
+    .product-horizontal-item .featured-product-card {
+        height: 100px;
+    }
+    
+    .product-horizontal-item h6 {
+        font-size: 0.65rem;
+    }
+    
+    .product-horizontal-item .price {
+        font-size: 0.65rem;
+    }
+}
+
+/* Hilangkan padding di container banner */
+.banner-modern {
+    padding: 0 !important;
+    margin-bottom: 30px;
+}
+
+.banner-modern .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Banner utama tetap ada padding */
+.banner-main {
+    border-radius: 0; /* OPSIONAL: 0 AGAR FULL LAYAR JUGA */
+    margin-bottom: 2px;
+}
+
+/* Jika ingin banner utama FULL LAYAR juga */
+.banner-main {
+    border-radius: 0;
+    margin-bottom: 2px;
+}
+
+.banner-content {
+    padding: 30px !important;
+}
+
+/* Hilangkan margin row */
+.banner-modern .row {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+}
 /* ===== BANNER STYLES ===== */
 .banner-main::before {
     content: "";
@@ -628,53 +798,54 @@ Home - Rey Beauty Fashion
         </div>
         
         <!-- 3 foto produk di bawah (gunakan 3 produk pertama dari $products) -->
-        <div class="row g-3">
-            <?php 
-            // Ambil 3 produk pertama dari $products
-            $count = 0;
-            foreach($products as $product): 
-                if($count >= 3) break;
+        <!-- 3 foto produk di bawah - HORIZONTAL SCROLL DI MOBILE -->
+<div class="row g-3 product-horizontal-row">
+    <?php 
+    // Ambil 3 produk pertama dari $products
+    $count = 0;
+    foreach($products as $product): 
+        if($count >= 3) break;
+        
+        // Cek gambar produk
+        $productImage = !empty($product['image']) ? base_url('uploads/products/' . $product['image']) : 
+                       'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+    ?>
+    <div class="col-md-4 col-4 product-horizontal-item">
+        <a href="<?= base_url('/products/' . $product['id']) ?>" class="text-decoration-none">
+            <div class="featured-product-card position-relative overflow-hidden rounded-3">
+                <img src="<?= $productImage ?>" 
+                     alt="<?= esc($product['title']) ?>" 
+                     class="img-fluid product-thumb">
                 
-                // Cek gambar produk
-                $productImage = !empty($product['image']) ? base_url('uploads/products/' . $product['image']) : 
-                               'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-            ?>
-            <div class="col-md-4">
-                <a href="<?= base_url('/products/' . $product['id']) ?>" class="text-decoration-none">
-                    <div class="featured-product-card position-relative overflow-hidden rounded-3">
-                        <img src="<?= $productImage ?>" 
-                             alt="<?= esc($product['title']) ?>" 
-                             class="img-fluid product-thumb">
-                        
-                        <?php if(isset($product['discount']) && $product['discount'] > 0): ?>
-                        <div class="product-badge bg-danger">
-                            -<?= $product['discount'] ?>%
-                        </div>
-                        <?php endif; ?>
-                        
-                        <div class="product-overlay">
-                            <div class="product-info">
-                                <h6 class="mb-1 fw-bold"><?= esc($product['title']) ?></h6>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <span class="price fw-bold">
-                                        Rp <?= number_format($product['price'] ?? 0, 0, ',', '.') ?>
-                                    </span>
-                                    <?php if(isset($product['discount']) && $product['discount'] > 0): ?>
-                                    <span class="old-price text-decoration-line-through">
-                                        Rp <?= number_format(($product['price'] ?? 0) * (1 + ($product['discount'] ?? 0)/100), 0, ',', '.') ?>
-                                    </span>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                <?php if(isset($product['discount']) && $product['discount'] > 0): ?>
+                <div class="product-badge bg-danger">
+                    -<?= $product['discount'] ?>%
+                </div>
+                <?php endif; ?>
+                
+                <div class="product-overlay">
+                    <div class="product-info">
+                        <h6 class="mb-1 fw-bold"><?= esc($product['title']) ?></h6>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="price fw-bold">
+                                Rp <?= number_format($product['price'] ?? 0, 0, ',', '.') ?>
+                            </span>
+                            <?php if(isset($product['discount']) && $product['discount'] > 0): ?>
+                            <span class="old-price text-decoration-line-through">
+                                Rp <?= number_format(($product['price'] ?? 0) * (1 + ($product['discount'] ?? 0)/100), 0, ',', '.') ?>
+                            </span>
+                            <?php endif; ?>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
-            <?php 
-                $count++;
-            endforeach; 
-            ?>
-        </div>
+        </a>
+    </div>
+    <?php 
+        $count++;
+    endforeach; 
+    ?>
+</div>
     </div>
 </section>
 <!-- END BANNER -->

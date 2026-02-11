@@ -53,6 +53,7 @@ $routes->post('/cart/add/(:num)', 'CartController::add/$1', ['filter' => 'auth']
 $routes->post('/cart/update', 'CartController::update', ['filter' => 'auth']);
 $routes->get('/about', 'PageController::about');
 $routes->get('/contact', 'PageController::contact');
+$routes->post('/contact/send', 'PageController::sendContact');
 
 // Order routes
 $routes->post('/checkout/process', 'CartController::processOrder', ['filter' => 'auth']);
